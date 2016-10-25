@@ -5,7 +5,7 @@ import java.util.Map;
 public class Fourmi {
 	
 	private static final double alpha = 2;
-	private static final double beta = 1;
+	private static final double beta = 0;
 	private static final double Q = 1;
 	private ArrayList<Ville> villesVisitees;
 	private ArrayList<Chemin> CheminsParcourus;
@@ -59,9 +59,9 @@ public class Fourmi {
 		for(Map.Entry<Chemin, Double> entry : villesCandidates.entrySet()){
 			sum+=entry.getValue();
 		}
-		if(sum == 0){
-			System.out.println("coucou");
-		}
+//		if(sum == 0){
+//			System.out.println("coucou");
+//		}
 		double nbAleatoire = Math.random()*sum;
 		sum = 0;
 		int l;

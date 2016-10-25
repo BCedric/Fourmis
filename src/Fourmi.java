@@ -6,7 +6,9 @@ public class Fourmi {
 	
 	private static final double alpha = 2;
 	private static final double beta = 1;
+	private static final double Q = 1;
 	private ArrayList<Ville> villesVisitees;
+	private ArrayList<Chemin> CheminsParcourus;
 	private Ville villeCourante; //Ville ou dernière ville courante
 	private Chemin cheminCourant;
 	private int cheminRestant;
@@ -14,6 +16,8 @@ public class Fourmi {
 	
 	public Fourmi(Simulation simulation, Ville nid){		
 		this.villesVisitees = new ArrayList<Ville>();
+		this.CheminsParcourus = new ArrayList<Chemin>();
+		
 		this.villeCourante = nid;
 		this.cheminCourant = null;
 		this.cheminRestant = 0;
@@ -30,10 +34,10 @@ public class Fourmi {
 			this.cheminRestant = newChemin.getLongueur();
 			this.villesVisitees.add(this.villeCourante);						
 		} else {
-			this.cheminRestant--;
-			this.cheminCourant.getPheromone().add((float) 1);
+			this.cheminRestant--;			
 			if(this.cheminRestant<=0){
 				this.villeCourante = this.cheminCourant.getAutreVille(this.villeCourante);
+				this.CheminsParcourus.add(this.cheminCourant);
 				this.cheminCourant = null;
 			}			
 		}
@@ -80,7 +84,7 @@ public class Fourmi {
 			if(this.villesVisitees.size()+1 != this.simulation.getVilles().size()){
 				for(Chemin c : this.villeCourante.getChemins()){
 					if(!this.villesVisitees.contains(c.getAutreVille(this.villeCourante))){
-						tau = Math.pow(c.getSommePheromone(), this.alpha);
+						tau = Math.pow(c.getPheromoneActive(), this.alpha);
 						nu = Math.pow(c.getLongueur(), -this.beta);
 						res.put(c,(tau*nu));
 					} 
@@ -91,7 +95,7 @@ public class Fourmi {
 			} else {
 				for(Chemin c : this.villeCourante.getChemins()){
 					if(this.simulation.getNid().equals(c.getAutreVille(this.villeCourante))){
-						tau = Math.pow(c.getSommePheromone(), this.alpha);
+						tau = Math.pow(c.getPheromoneActive(), this.alpha);
 						nu = Math.pow(c.getLongueur(), -this.beta);
 						res.put(c,(tau*nu));
 					} 
@@ -119,13 +123,25 @@ public class Fourmi {
 			double sum = 0;
 			double tau, nu;
 			for(Chemin c : this.villeCourante.getChemins()){
-				tau = Math.pow(c.getSommePheromone(), this.alpha);
+				tau = Math.pow(c.getPheromoneActive(), this.alpha);
 				nu = Math.pow(c.getLongueur(), -this.beta);
 				sum+=tau*nu;
 			}
 			return sum;
 		}
 		return 0;
+		
+	}
+	
+	public void déposerPheromones(){
+		int longueurTotale = 0;
+		for(Chemin c : this.CheminsParcourus){
+			longueurTotale += c.getLongueur();
+		}
+		
+		for(Chemin c : this.CheminsParcourus){
+			c.ajouterPheromones(Fourmi.Q/longueurTotale);
+		}
 		
 	}
 	

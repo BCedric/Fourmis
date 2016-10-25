@@ -2,17 +2,19 @@ import java.util.ArrayList;
 
 public class Chemin {
 	
+	private static final double rho = 0.5;
 	private Ville villeA;
 	private Ville villeB;
 	private int longueur;
-	private ArrayList<Float> pheromone;
+	private double pheromoneActive;
+	private double pheromoneEnAttente;
 	
 	public Chemin(Ville villeA, Ville villeB, int longueur) {
 		super();
 		this.villeA = villeA;
 		this.villeB = villeB;
 		this.longueur = longueur;
-		this.pheromone = new ArrayList<Float>();
+		this.pheromoneActive = 0;
 		this.villeA.ajouterChemin(this);
 		this.villeB.ajouterChemin(this);
 	}
@@ -21,28 +23,20 @@ public class Chemin {
 		return longueur;
 	}
 
-	public ArrayList<Float> getPheromone() {
-		return pheromone;
+	public double getPheromoneActive() {
+		return pheromoneActive;
 	}
 	
-	private void miseAJourPheromones(){
-		float f;
-		ArrayList<Float> newPhero = new ArrayList<Float>();
-		for(int i =0; i< this.pheromone.size();++i){
-			f = (float) (this.pheromone.get(i) - 0.1);
-			if( f > 0) newPhero.add((float) (f-0.1));
-		}
-		this.pheromone = newPhero;
+	public void ajouterPheromones(double ph){
+		this.pheromoneEnAttente+=ph;
 	}
 	
-	public float getSommePheromone(){
-		//this.miseAJourPheromones();
-		float sum = 0;
-		for(float f : this.pheromone){
-			sum+=f;
-		}
-		return sum;
+	public void MAJPheromones(){
+		this.pheromoneActive = this.pheromoneActive * Chemin.rho + this.pheromoneEnAttente;
+		this.pheromoneEnAttente = 0;
 	}
+	
+	
 	
 	public Ville getAutreVille(Ville v){
 		if( v.equals(villeA)) return this.villeB;

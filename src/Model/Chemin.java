@@ -1,13 +1,15 @@
+package Model;
 import java.util.ArrayList;
 
 public class Chemin {
 	
-	private static final double rho = 0.5;
+	static double rho = 0.5;
 	private Ville villeA;
 	private Ville villeB;
 	private int longueur;
 	private double pheromoneActive;
 	private double pheromoneEnAttente;
+	private ArrayList<Fourmi> fourmis;
 	
 	public Chemin(Ville villeA, Ville villeB, int longueur) {
 		super();
@@ -16,8 +18,11 @@ public class Chemin {
 		this.longueur = longueur;
 		this.pheromoneActive = 0;
 		this.villeA.ajouterChemin(this);
-		this.villeB.ajouterChemin(this);
+		this.villeB.ajouterChemin(this);	
+		this.fourmis = new ArrayList<Fourmi>();
 	}
+
+	
 
 	public int getLongueur() {
 		return longueur;
@@ -45,5 +50,16 @@ public class Chemin {
 	}
 	
 	
+	
+	public ArrayList<Fourmi> getFourmis() {
+		return fourmis;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Chemin "+this.villeA.getNom()+this.villeB.getNom()+" : "+this.fourmis.size()+" fourmis";
+	}
 
 }

@@ -1,3 +1,4 @@
+package Model;
 import java.util.ArrayList;
 
 public class Simulation {
@@ -11,10 +12,11 @@ public class Simulation {
 	
 	
 	
-	public Simulation() {
+	public Simulation(double evaporation) {
 		super();		
 		this.fourmis = new ArrayList<Fourmi>();
-		this.chemins = new ArrayList<Chemin>();		
+		this.chemins = new ArrayList<Chemin>();
+		Chemin.rho = evaporation;
 	}
 	public void faireAvancer(){
 		ArrayList<Fourmi> fourmisASupprimer = new ArrayList<Fourmi>();
@@ -24,7 +26,6 @@ public class Simulation {
 				fourmisASupprimer.add(f);
 			}
 		}
-//		System.out.println(fourmisASupprimer.size());
 		for(Fourmi f : fourmisASupprimer){
 			f.déposerPheromones();
 			this.fourmis.remove(f);
@@ -41,25 +42,13 @@ public class Simulation {
 		return fourmis;
 	}
 	
-	public boolean rapport(){
-		int c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0, c6 = 0;
-		for(Fourmi f : this.fourmis){
-			if(f.getCheminCourant() != null && f.getCheminCourant().equals(this.chemins.get(0))) c1++;
-			else if(f.getCheminCourant() != null &&f.getCheminCourant().equals(this.chemins.get(1))) c2++;
-			else if(f.getCheminCourant() != null &&f.getCheminCourant().equals(this.chemins.get(2))) c3++;
-			else if(f.getCheminCourant() != null &&f.getCheminCourant().equals(this.chemins.get(3))) c4++;
-			else if(f.getCheminCourant() != null &&f.getCheminCourant().equals(this.chemins.get(4))) c5++;
-			else if(f.getCheminCourant() != null &&f.getCheminCourant().equals(this.chemins.get(5))) c6++;
+	@Override
+	public String toString(){
+		String res = "";
+		for(Chemin c : this.chemins){
+			res+=c.toString()+" | ";
 		}
-		System.out.println("Chemin AB : "+c1+" fourmis, et "+Double.toString(this.chemins.get(0).getPheromoneActive()).substring(0,3)
-				+ ",Chemin BC : "+c2+" fourmis, et "+Double.toString(this.chemins.get(1).getPheromoneActive()).substring(0,3)
-				+ ",Chemin CD : "+c3+" fourmis, et "+Double.toString(this.chemins.get(2).getPheromoneActive()).substring(0,3)
-				+ ",Chemin AD : "+c4+" fourmis, et "+Double.toString(this.chemins.get(3).getPheromoneActive()).substring(0,3)
-				+ ",Chemin DB : "+c5+" fourmis, et "+Double.toString(this.chemins.get(4).getPheromoneActive()).substring(0,3)
-				+ ",Chemin AC : "+c6+" fourmis, et "+Double.toString(this.chemins.get(5).getPheromoneActive()).substring(0,3)
-				);
-//		return !(c2 == 0 && c4 == 0);
-		return true;
+		return res;
 		
 	}
 	
@@ -85,7 +74,7 @@ public class Simulation {
 	
 	
 	public static void main(String[] args) {
-		Simulation sim = new Simulation();
+		Simulation sim = new Simulation(0.8);
 		
 		Ville A = new Ville("A");
 		Ville B = new Ville("B");
@@ -111,15 +100,13 @@ public class Simulation {
 			for(int i= 0; i<100; ++i){
 				sim.getFourmis().add(new Fourmi(sim, sim.getNid()));
 			}
-			sim.faireAvancer();			
-			if(j> 100 && j % 10 == 0){
-				System.out.println();
-			}
+			sim.faireAvancer();						
 			sim.MAJPheromones();
 			j++;
 			k++;
+			System.out.println(sim.toString());
 			
-		}while(sim.rapport());
+		}while(true);
 
 	}
 	

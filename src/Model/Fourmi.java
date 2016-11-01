@@ -1,3 +1,4 @@
+package Model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,12 +33,14 @@ public class Fourmi {
 			Chemin newChemin = this.choisirChemin();
 			this.cheminCourant = newChemin;
 			this.cheminRestant = newChemin.getLongueur();
+			this.cheminCourant.getFourmis().add(this);
 			this.villesVisitees.add(this.villeCourante);						
 		} else {
 			this.cheminRestant--;			
 			if(this.cheminRestant<=0){
 				this.villeCourante = this.cheminCourant.getAutreVille(this.villeCourante);
 				this.CheminsParcourus.add(this.cheminCourant);
+				this.cheminCourant.getFourmis().remove(this);
 				this.cheminCourant = null;
 			}			
 		}

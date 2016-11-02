@@ -14,8 +14,9 @@ public class Fourmi {
 	private Chemin cheminCourant;
 	private int cheminRestant;
 	private Simulation simulation;
+	private boolean choixChemin; // vrai: le chemin est choisi selon le nombre de phéromone, faux : le chemin est choisi selon des  probabilité en tenant compte de la longueur des chemins et du nombre de phéromones
 	
-	public Fourmi(Simulation simulation, Ville nid){		
+	public Fourmi(Simulation simulation, Ville nid, boolean choixChemin){		
 		this.villesVisitees = new ArrayList<Ville>();
 		this.CheminsParcourus = new ArrayList<Chemin>();
 		
@@ -24,13 +25,17 @@ public class Fourmi {
 		this.cheminRestant = 0;
 		
 		this.simulation = simulation;
+		
+		this.choixChemin = choixChemin;
 	}
 	
 	
 	//revoir renvoie
 	public void avancer(){		
-		if(this.cheminCourant == null){			
-			Chemin newChemin = this.choisirChemin();
+		if(this.cheminCourant == null){
+			Chemin newChemin;
+			if(this.choixChemin) newChemin = this.choisirChemin();
+			else newChemin = this.choisirCheminAvecLongueur();
 			this.cheminCourant = newChemin;
 			this.cheminRestant = newChemin.getLongueur();
 			this.cheminCourant.getFourmis().add(this);
@@ -46,11 +51,7 @@ public class Fourmi {
 		}
 	}
 	
-	
-
-	
-	
-	private Chemin choisirChemin(){
+	private Chemin choisirCheminAvecLongueur(){
 		HashMap<Chemin, Double> villesCandidates = this.calculProba();
 		if(villesCandidates.size() == 1){
 			for(Map.Entry<Chemin, Double> entry : villesCandidates.entrySet()){
@@ -62,9 +63,7 @@ public class Fourmi {
 		for(Map.Entry<Chemin, Double> entry : villesCandidates.entrySet()){
 			sum+=entry.getValue();
 		}
-//		if(sum == 0){
-//			System.out.println("coucou");
-//		}
+
 		double nbAleatoire = Math.random()*sum;
 		sum = 0;
 		int l;
@@ -76,6 +75,46 @@ public class Fourmi {
 			sum+=entry.getValue();
 		}
 		return null;
+	}
+	
+	
+	
+	private Chemin choisirChemin(){
+		ArrayList<Chemin> cheminsCandidats = new ArrayList<Chemin>();
+		ArrayList<Chemin> res = new ArrayList<Chemin>();
+		double pheromones;
+		
+		if(this.villesVisitees.size()+1 != this.simulation.getVilles().size()){
+			for(Chemin c : this.villeCourante.getChemins()){
+				if(!this.villesVisitees.contains(c.getAutreVille(this.villeCourante))){
+					cheminsCandidats.add(c);
+				} 				
+			}
+		} else {
+			for(Chemin c : this.villeCourante.getChemins()){
+				if(c.getAutreVille(this.villeCourante).equals(this.simulation.nid)){
+					cheminsCandidats.add(c);
+				}
+			}
+		}
+		
+		pheromones = cheminsCandidats.get(0).getPheromoneActive();
+		
+		for(Chemin c : cheminsCandidats){
+			if(pheromones < c.getPheromoneActive()){
+				res.clear();
+				pheromones = c.getPheromoneActive();
+				res.add(c);
+			} else if(pheromones == c.getPheromoneActive()) {
+				res.add(c);
+			}
+		}
+		
+		
+		if(res.size()>1){			
+			return res.get((int) (Math.random()*res.size()));
+		}
+		return res.get(0);							
 	}
 	
 	

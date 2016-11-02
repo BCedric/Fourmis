@@ -78,27 +78,24 @@ public class Simulation {
 		
 		Ville A = new Ville("A");
 		Ville B = new Ville("B");
-		Ville C = new Ville("C");
-		Ville D = new Ville("D");
+		
 		
 		sim.ajouterVille(A);
 		sim.ajouterVille(B);
-		sim.ajouterVille(C);
-		sim.ajouterVille(D);
 		
-		sim.getChemins().add(new Chemin(A,B,5));
-		sim.getChemins().add(new Chemin(B,C,10));
-		sim.getChemins().add(new Chemin(C,D,9));
-		sim.getChemins().add(new Chemin(A,D,10));
-		sim.getChemins().add(new Chemin(D,B,8));
-		sim.getChemins().add(new Chemin(C,A,14));
+		Chemin c1 = new Chemin(A,B,6);
+		Chemin c2 = new Chemin(A,B,5);
+		
+		sim.getChemins().add(c1);
+		sim.getChemins().add(c2);
+		
 		
 		
 		
 		int j =0, k=0;
 		do{
 			for(int i= 0; i<100; ++i){
-				sim.getFourmis().add(new Fourmi(sim, sim.getNid()));
+				sim.getFourmis().add(new Fourmi(sim, sim.getNid(), true));
 			}
 			sim.faireAvancer();						
 			sim.MAJPheromones();
@@ -106,7 +103,7 @@ public class Simulation {
 			k++;
 			System.out.println(sim.toString());
 			
-		}while(true);
+		}while(c1.getFourmis().size() != 0 && c2.getFourmis().size() != 0);
 
 	}
 	

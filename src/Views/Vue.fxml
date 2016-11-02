@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
@@ -40,6 +41,12 @@
                </children>
             </HBox>
             <Slider fx:id="pheromones" blockIncrement="0.1" majorTickUnit="0.1" max="1.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" value="0.8" />
+            <HBox prefHeight="63.0" prefWidth="189.0" style="-fx-padding: 10;">
+               <children>
+                  <Label prefHeight="36.0" prefWidth="128.0" text="Tenir compte de la taille des chemins " textAlignment="CENTER" wrapText="true" />
+                  <CheckBox fx:id="tailleChemin" mnemonicParsing="false" style="-fx-padding: 10;" />
+               </children>
+            </HBox>
             <Button fx:id="boutton" mnemonicParsing="false" onAction="#startOnAction" text="Lancer" />
          </children>
       </VBox>

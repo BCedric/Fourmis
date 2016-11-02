@@ -3,6 +3,7 @@ package Views;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 
 import java.util.ArrayList;
 
@@ -58,6 +59,8 @@ public class VueController {
 	private Button boutton;
 	@FXML
 	private Pane drawingPane;
+	@FXML
+	private CheckBox tailleChemin;
 
 	// Event Listener on ComboBox[#nbVilles].onAction
 	@FXML
@@ -135,10 +138,11 @@ public class VueController {
 					sim.getChemins().add(c);
 					
 				}
-								
+				this.nbVilles.setDisable(true);
 		        this.service.start();
 				
 			} else if(this.boutton.getText().equals("Stop")){
+				this.nbVilles.setDisable(false);
 				this.service.cancel();			
 				this.service.reset();
 				this.boutton.setText("Lancer");
@@ -154,13 +158,10 @@ public class VueController {
 				if(cihm.getModel().getFourmis().size() == 0) cihm.setOpacity(0.2);
 				else cihm.setOpacity(1);
 			}
-			for(int i= 0; i<this.nbFourmis.getValue(); ++i){
-				sim.getFourmis().add(new Fourmi(sim, sim.getNid()));
+			for(int i= 0; i<this.nbFourmis.getValue(); ++i){				
+				sim.getFourmis().add(new Fourmi(sim, sim.getNid(), this.tailleChemin.isSelected()));
 			}
-			sim.faireAvancer();			
-			if(j> 100 && j % 10 == 0){
-				System.out.println();
-			}
+			sim.faireAvancer();						
 			sim.MAJPheromones();
 			j++;
 			k++;
@@ -170,6 +171,6 @@ public class VueController {
 	
 	@FXML
 	private void initialize(){
-		this.nbVilles.getItems().addAll("4", "5", "6");
+		this.nbVilles.getItems().addAll("4", "5", "6", "7", "8");
 	}
 }

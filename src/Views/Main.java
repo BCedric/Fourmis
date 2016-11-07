@@ -3,6 +3,8 @@ package Views;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -14,8 +16,9 @@ import javafx.stage.Stage;
 public class Main extends Application{
 	
 	@Override
-	public void start(Stage primaryStage) throws Exception{
-		primaryStage.setTitle("Event Handling");
+	public void start(Stage primaryStage) throws Exception{		
+		
+		primaryStage.setTitle("Fourmis");
 		
 		try {
 //			 Dimensions de l'écran
@@ -30,6 +33,7 @@ public class Main extends Application{
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("Vue.fxml"));
 			BorderPane page = (BorderPane) loader.load();
 			Scene scene = new Scene(page, screenWidth, screenHeight);
+			
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (IOException e) {

@@ -7,6 +7,8 @@ public class Fourmi {
 	
 	private static final double alpha = 2;
 	private static final double beta = 0;
+	private static double alpha = 2;
+	private static double beta = 0;
 	private static final double Q = 1;
 	private ArrayList<Ville> villesVisitees;
 	private ArrayList<Chemin> CheminsParcourus;
@@ -194,5 +196,27 @@ public class Fourmi {
 	public Chemin getCheminCourant() {
 		return cheminCourant;
 	}
+
+
+	public static double getAlpha() {
+		return alpha;
+	}
+
+
+	public static void setAlpha(double alpha) {
+		Fourmi.alpha = alpha;
+	}
+
+
+	public static double getBeta() {
+		return beta;
+	}
+
+
+	public static void setBeta(double beta) {
+		Fourmi.beta = beta;
+	}
+	
+	
 
 }

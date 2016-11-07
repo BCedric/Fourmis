@@ -11,6 +11,7 @@ import Model.Chemin;
 import Model.Fourmi;
 import Model.Simulation;
 import Model.Ville;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -18,6 +19,7 @@ import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.Light.Point;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -61,6 +63,10 @@ public class VueController {
 	private Pane drawingPane;
 	@FXML
 	private CheckBox tailleChemin;
+	@FXML
+	private TextField alpha;
+	@FXML
+	private TextField beta;
 
 	// Event Listener on ComboBox[#nbVilles].onAction
 	@FXML

@@ -6,12 +6,13 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.VueController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="916.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.VueController">
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="209.0" style="-fx-background-color: #336699; -fx-padding: 10;" BorderPane.alignment="CENTER">
          <children>
@@ -44,7 +45,19 @@
             <HBox prefHeight="63.0" prefWidth="189.0" style="-fx-padding: 10;">
                <children>
                   <Label prefHeight="36.0" prefWidth="128.0" text="Tenir compte de la taille des chemins " textAlignment="CENTER" wrapText="true" />
-                  <CheckBox fx:id="tailleChemin" mnemonicParsing="false" style="-fx-padding: 10;" />
+                  <CheckBox fx:id="tailleChemin" mnemonicParsing="false" onAction="#checkChemin" style="-fx-padding: 10;" />
+               </children>
+            </HBox>
+            <HBox prefHeight="39.0" prefWidth="189.0" style="-fx-padding: 10;">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="112.0" text="Coefficient alpha" />
+                  <TextField fx:id="alpha" prefHeight="25.0" prefWidth="48.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-padding: 10;">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="112.0" text="Coefficient beta" />
+                  <TextField fx:id="beta" prefHeight="25.0" prefWidth="48.0" />
                </children>
             </HBox>
             <Button fx:id="boutton" mnemonicParsing="false" onAction="#startOnAction" text="Lancer" />

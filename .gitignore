@@ -48,4 +48,5 @@ Temporary Items
 *.class
 /bin/
 doc/~$$DiagrammeClasses.~vsdx
-*.docx
+
+doc/~$ntrôle continu.docx

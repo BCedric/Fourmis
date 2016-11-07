@@ -71,11 +71,15 @@ public class VueController {
 	// Event Listener on ComboBox[#nbVilles].onAction
 	@FXML
 	public void handleButtonAction(ActionEvent event) {
-		
-		
+		this.dessinerGraphe();		
+	}
+	
+	public void dessinerGraphe(){
 		this.drawingPane.getChildren().clear();
 		this.villes.clear();
 		this.chemins.clear();
+		
+		this.boutton.setDisable(false);
 		
 		CheminIHM cihm;
 		double centreX = this.drawingPane.getWidth()/2;
@@ -109,12 +113,18 @@ public class VueController {
 				this.drawingPane.getChildren().add(cihm);
 			}
 		}
-		
 	}
+	
 	
 	// Event Listener on Button[#boutton].onAction
 		@FXML
-		public void startOnAction(ActionEvent event) {
+		public void startOnAction(ActionEvent event) {						
+			
+			if(this.tailleChemin.isSelected() && this.alpha.getText() != "" && this.beta.getText() != ""){				
+				Fourmi.setAlpha(Integer.parseInt(this.alpha.getText()));
+				Fourmi.setBeta(Integer.parseInt(this.beta.getText()));
+			}
+			
 			
 			if(this.boutton.getText().equals("Lancer")){
 				
@@ -180,6 +190,57 @@ public class VueController {
 		this.alpha.setDisable(true);
 		this.beta.setDisable(true);
 		this.nbVilles.getItems().addAll("4", "5", "6", "7", "8");
+		this.boutton.setDisable(true);
+		this.drawingPane.widthProperty().addListener(new ChangeListener<Number>() {								
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	
+		    	
+		    	
+		    	if(nbVilles.getValue()!=null){
+		    		drawingPane.getChildren().clear();
+					villes.clear();
+					chemins.clear();
+					
+					boutton.setDisable(false);
+					
+					CheminIHM cihm;
+					double centreX = drawingPane.getWidth()/2;
+					double centreY = drawingPane.getHeight()/2;
+					int nbV = Integer.parseInt((String) nbVilles.getValue());
+					double angle = 2*Math.PI/nbV;
+					VilleIHM vihm;
+					Text t;
+					char car = 'A';
+					Ville v;
+									
+					for(int i = 0; i< nbV ; ++i){
+						v = new Ville(""+car);
+						
+						t = new Text(""+car);
+						t.setX(210*Math.cos(i*angle)+centreX);
+						t.setY(210*Math.sin(i*angle)+centreY);
+						vihm = new VilleIHM(200*Math.cos(i*angle)+centreX, 200*Math.sin(i*angle)+centreY, t);
+						drawingPane.getChildren().add(t);
+						villes.add(vihm);
+						
+						
+						car ++;
+					}
+					
+					for(int i = 0; i < villes.size(); ++i){
+						for(int j = i+1; j< villes.size(); ++j){
+							
+							cihm = new CheminIHM(villes.get(i), villes.get(j), drawingPane);
+							chemins.add(cihm);
+							drawingPane.getChildren().add(cihm);
+						}
+					}
+				}
+		    	
+		    	
+				
+		    }
+		});
 	}
 	
 	// Event Listener on CheckBox[#tailleChemin].onAction

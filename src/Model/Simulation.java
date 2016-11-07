@@ -74,7 +74,13 @@ public class Simulation {
 	
 	
 	public static void main(String[] args) {
-		Simulation sim = new Simulation(0.8);
+		int nbFourmis = Integer.parseInt(args[0]);
+		int lc1 = Integer.parseInt(args[1]);
+		int lc2 = Integer.parseInt(args[2]);
+		float pheromone = Float.parseFloat(args[3]);
+		int option = Integer.parseInt(args[4]);
+		
+		Simulation sim = new Simulation(pheromone);
 		
 		Ville A = new Ville("A");
 		Ville B = new Ville("B");
@@ -83,19 +89,17 @@ public class Simulation {
 		sim.ajouterVille(A);
 		sim.ajouterVille(B);
 		
-		Chemin c1 = new Chemin(A,B,6);
-		Chemin c2 = new Chemin(A,B,5);
+		Chemin c1 = new Chemin(A,B,lc1);
+		Chemin c2 = new Chemin(A,B,lc2);
 		
 		sim.getChemins().add(c1);
 		sim.getChemins().add(c2);
 		
-		
-		
-		
-		int j =0, k=0;
+		 int j =0, k = 0;
+						
 		do{
-			for(int i= 0; i<100; ++i){
-				sim.getFourmis().add(new Fourmi(sim, sim.getNid(), true));
+			for(int i= 0; i<nbFourmis; ++i){
+				sim.getFourmis().add(new Fourmi(sim, sim.getNid(), option == 1));
 			}
 			sim.faireAvancer();						
 			sim.MAJPheromones();

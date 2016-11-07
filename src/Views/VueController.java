@@ -177,6 +177,20 @@ public class VueController {
 	
 	@FXML
 	private void initialize(){
+		this.alpha.setDisable(true);
+		this.beta.setDisable(true);
 		this.nbVilles.getItems().addAll("4", "5", "6", "7", "8");
 	}
+	
+	// Event Listener on CheckBox[#tailleChemin].onAction
+		@FXML
+		public void checkChemin(ActionEvent event) {
+			if(this.tailleChemin.isSelected()) {
+				this.alpha.setDisable(false);
+				this.beta.setDisable(false);
+			} else {
+				this.alpha.setDisable(true);
+				this.beta.setDisable(true);
+			}
+		}
 }

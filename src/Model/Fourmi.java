@@ -5,8 +5,6 @@ import java.util.Map;
 
 public class Fourmi {
 	
-	private static final double alpha = 2;
-	private static final double beta = 0;
 	private static double alpha = 2;
 	private static double beta = 0;
 	private static final double Q = 1;

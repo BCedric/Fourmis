@@ -189,7 +189,7 @@ public class VueController {
 	private void initialize(){
 		this.alpha.setDisable(true);
 		this.beta.setDisable(true);
-		this.nbVilles.getItems().addAll("4", "5", "6", "7", "8");
+		this.nbVilles.getItems().addAll("4", "5", "6", "7", "8", "9", "10");
 		this.boutton.setDisable(true);
 		this.drawingPane.widthProperty().addListener(new ChangeListener<Number>() {								
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
